@@ -12,3 +12,10 @@
     font-family: var(--font-display);
   }
 }
+
+.x{
+  background-image: url('https://i.pinimg.com/736x/b6/37/7e/b6377e4635496e95476c5c4cdbc7aaea.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
