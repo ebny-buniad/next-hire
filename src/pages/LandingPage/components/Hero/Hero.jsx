@@ -57,7 +57,7 @@ const Hero = () => {
                             }
                         }
                     }}
-                    className='grid grid-cols-2 md:grid-cols-3 gap-6 mt-20'
+                    className='grid grid-cols-3 md:grid-cols-3 gap-6 mt-20'
                 >
                     {heroStats.map((stat, index) => (
                         <motion.div
@@ -78,8 +78,6 @@ const Hero = () => {
                     ))}
                 </motion.div>
             </div>
-
-
         </section>
     );
 };
