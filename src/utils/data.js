@@ -48,4 +48,31 @@ const employerFeatures = [
     },
 ];
 
+const analyticsData = [
+    {
+        icon: Users,
+        users: '2.4M+',
+        text: 'Active Users',
+        percent: '+15%'
+    },
+    {
+        icon: Users,
+        users: '2.4M+',
+        text: 'Active Users',
+        percent: '+15%'
+    },
+    {
+        icon: Users,
+        users: '2.4M+',
+        text: 'Active Users',
+        percent: '+15%'
+    },
+    {
+        icon: Users,
+        users: '2.4M+',
+        text: 'Active Users',
+        percent: '+15%'
+    },
+]
+
 export { jobSeekerFeatures, employerFeatures };
