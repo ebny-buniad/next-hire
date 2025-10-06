@@ -2,10 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { jobSeekerFeatures, employerFeatures } from '../../../../utils/data.js';
 
-console.log(jobSeekerFeatures);
-console.log(employerFeatures);
-
-
 const Features = () => {
     return (
         <div>

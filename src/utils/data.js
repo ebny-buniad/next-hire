@@ -1,4 +1,4 @@
-import { Search, FileUser, MessageSquareMore, Award, Users, ChartNoAxesCombined, ShieldCheck, Clock } from 'lucide-react';
+import { Target, TrendingUp, Search, FileUser, MessageSquareMore, Award, Users, ChartNoAxesCombined, ShieldCheck, Clock, Briefcase } from 'lucide-react';
 
 const jobSeekerFeatures = [
     {
@@ -51,28 +51,28 @@ const employerFeatures = [
 const analyticsData = [
     {
         icon: Users,
-        users: '2.4M+',
+        number: '1.4M+',
         text: 'Active Users',
         percent: '+15%'
     },
     {
-        icon: Users,
-        users: '2.4M+',
-        text: 'Active Users',
-        percent: '+15%'
+        icon: Briefcase,
+        number: '120K+',
+        text: 'Jobs Posted',
+        percent: '+25%'
     },
     {
-        icon: Users,
-        users: '2.4M+',
-        text: 'Active Users',
-        percent: '+15%'
+        icon: Target,
+        number: '96K+',
+        text: 'Successful Hires',
+        percent: '+16%'
     },
     {
-        icon: Users,
-        users: '2.4M+',
-        text: 'Active Users',
-        percent: '+15%'
+        icon: TrendingUp,
+        number: '94%',
+        text: 'Match Rate',
+        percent: '+39%'
     },
 ]
 
-export { jobSeekerFeatures, employerFeatures };
+export { jobSeekerFeatures, employerFeatures, analyticsData };
