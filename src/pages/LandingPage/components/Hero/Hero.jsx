@@ -10,7 +10,7 @@ const heroStats = [
 
 const Hero = () => {
     return (
-        <section className='min-h-[90vh] flex items-center justify-center x'>
+        <section className='min-h-[90vh] flex items-center justify-center hero-bg'>
             <div className='space-y-6'>
                 <div className="text-center mt-40">
                     <motion.h1

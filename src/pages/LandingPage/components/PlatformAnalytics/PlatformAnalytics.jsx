@@ -11,7 +11,7 @@ const PlatformAnalytics = () => {
                 our platform in <span className='block'>connecting talent with opportunits.</span>
             </p>
 
-            <div className='grid md:grid-cols-2 lg:grid-cols-4 my-10 gap-5'>
+            <div data-aos="fade-up" className='grid md:grid-cols-3 lg:grid-cols-4 mt-10 mb-20 gap-5'>
                 {
                     analyticsData.map((data, index) => {
                         const Icon = data.icon;

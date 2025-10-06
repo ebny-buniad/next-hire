@@ -1,8 +1,8 @@
 import React from 'react';
-import logo from '../../assets/next-logo.svg'
 import { Link, NavLink } from 'react-router';
 import Container from '../Container/Container';
 import { motion } from 'framer-motion';
+import Logo from '../Logo/Logo';
 
 
 const Header = () => {
@@ -35,10 +35,7 @@ const Header = () => {
                                 {links}
                             </ul>
                         </div>
-                        <Link className='flex items-end'>
-                            <img className='w-26 h-11' src={logo} alt="Logo" />
-                            <span className='text-xl'>hire</span>
-                        </Link>
+                        <Logo></Logo>
                     </div>
 
                     <div className="navbar-center hidden lg:flex">
