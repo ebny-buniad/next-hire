@@ -5,7 +5,7 @@ import { ArrowLeft, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from 'react-hook-form';
 
-const Signin = () => {
+const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
@@ -26,7 +26,6 @@ const Signin = () => {
                 </div>
 
                 <p className='text-gray-500 text-center'>Please, Sign in to your JobPortal account</p>
-
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-8">
                     {/* Email */}
@@ -94,14 +93,13 @@ const Signin = () => {
                 <p className="text-center text-sm text-gray-600 mt-10">
                     Don’t have an account?{" "}
                     <Link to="/auth/signup" className="text-primary hover:underline">
-                        Create
+                        Create an account
                     </Link>
                 </p>
-
 
             </div>
         </div>
     );
 };
 
-export default Signin;
+export default Login;
