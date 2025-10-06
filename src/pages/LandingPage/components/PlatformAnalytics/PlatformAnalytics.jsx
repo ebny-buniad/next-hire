@@ -1,6 +1,5 @@
 import React from 'react';
 import { analyticsData } from '../../../../utils/data.js'
-console.log(analyticsData)
 
 const PlatformAnalytics = () => {
     return (

@@ -4,12 +4,12 @@ import { Link } from 'react-router';
 
 const Logo = () => {
     return (
-        
-            <Link to='/' className='flex items-end'>
+        <div>
+            <Link className='flex items-end' to='/'>
                 <img className='w-26 h-11' src={logoImg} alt="Logo" />
                 <span className='text-xl'>hire</span>
             </Link>
-        
+        </div>
     );
 };
 

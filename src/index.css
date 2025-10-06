@@ -1,21 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
 
 @theme {
-  --font-display: "Urbanist", sans-serif;
-  --color-primary: #00A7F3
+  --font-display: "Poppins", sans-serif;
+  --color-primary: #00A7F3;
+  --font-size: 14px
 }
 
 @layer base {
   html {
     font-family: var(--font-display);
+    font-size: var(--font-size);
   }
 }
 
-.hero-bg{
+.hero-bg {
   background-image: url('https://i.pinimg.com/736x/b6/37/7e/b6377e4635496e95476c5c4cdbc7aaea.jpg');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+}
+
+.bg-glass {
+  background-color: white;
 }

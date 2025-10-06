@@ -45,8 +45,8 @@ const Header = () => {
                     </div>
 
                     <div className="navbar-end gap-3">
-                        <Link to='' className=''>Login</Link>
-                        <Link to=''
+                        <Link to='/auth/login' className=''>Login</Link>
+                        <Link to='/auth/signup'
                             className='px-4 py-2 rounded-md text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:text-black transition transform'>
                             Sign Up
                         </Link>
