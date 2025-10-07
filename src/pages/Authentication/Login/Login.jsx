@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import Logo from '../../../components/Logo/Logo';
 import { ArrowLeft, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from 'react-hook-form';
+import useAuth from '../../../hooks/useAuth';
 
 const Login = () => {
+    const { signInUser } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, } = useForm();
+    const location = useLocation();
+    const naigate = useNavigate();
 
     const onSubmit = (data) => {
-        console.log(data)
+        const { email, password } = data;
+        signInUser(email, password)
+            .then(() => {
+                naigate(location?.state?.pathname || '/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     return (

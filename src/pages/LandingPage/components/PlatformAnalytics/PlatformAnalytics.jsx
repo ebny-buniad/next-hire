@@ -3,14 +3,14 @@ import { analyticsData } from '../../../../utils/data.js'
 
 const PlatformAnalytics = () => {
     return (
-        <div>
-            <h1 data-aos="fade-up" className='py-5 text-4xl lg:text-5xl xl:text-6xl font-bold text-center'>Platform <span className='bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent'>Analytics</span>
+        <div className='my-15'>
+            <h1 data-aos="fade-up" className='py-8 text-4xl lg:text-5xl xl:text-6xl font-bold text-center'>Platform <span className='bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent'>Analytics</span>
             </h1>
             <p data-aos="fade-up" className='text-center'>Real-time insights and data-driven results that showcase the power of
                 our platform in <span className='block'>connecting talent with opportunits.</span>
             </p>
 
-            <div data-aos="fade-up" className='grid md:grid-cols-3 lg:grid-cols-4 mt-10 mb-20 gap-5'>
+            <div data-aos="fade-up" className='grid md:grid-cols-3 lg:grid-cols-4 my-20 gap-5'>
                 {
                     analyticsData.map((data, index) => {
                         const Icon = data.icon;

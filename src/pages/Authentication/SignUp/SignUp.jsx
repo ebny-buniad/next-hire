@@ -1,30 +1,50 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import Logo from '../../../components/Logo/Logo';
 import { ArrowLeft, Mail, Lock, Eye, EyeOff, User, Briefcase } from 'lucide-react';
-import { FcGoogle } from "react-icons/fc";
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
+import useAxios from '../../../hooks/useAxios';
 
 const SignUp = () => {
     const { createUser, updateUserProfile } = useAuth();
+    const [fbError, setFbError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const selectedRole = watch("role");
+    const axiosInstance = useAxios();
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        createUser(data.email, data.password)
-            .then((res) => {
-                console.log(res)
-
+        const { name, email, role, password } = data;
+        const userInfo = {
+            name,
+            email,
+            role,
+            createdAt: new Date().toISOString(),
+            lastLoginAt: new Date().toISOString(),
+            photoURL: "",
+        }
+        createUser(email, password)
+            .then(async () => {
                 // Update user profile
                 const userProfile = {
-                    displayName: data.name,
+                    displayName: name,
                 }
                 updateUserProfile(userProfile);
+
+                // Send user info in DB
+                const res = await axiosInstance.post('/api/users', userInfo);
+                console.log(res);
+                if (res.data.insertedId) {
+                    navigate('/')
+                }
+
             })
             .catch((error) => {
-                console.log(error)
+                if (error.code === "auth/email-already-in-use") {
+                    setFbError(true);
+                }
             });
     }
 
@@ -154,9 +174,7 @@ const SignUp = () => {
                             Sign Up
                         </button>
                     </form>
-
-
-
+                    {fbError && <p className='text-xs text-red-400'>This email alredy registred</p>}
                     <p className="text-center text-sm text-gray-600 mt-5">
                         Already have an account?{" "}
                         <Link to="/auth/login" className="text-primary hover:underline">

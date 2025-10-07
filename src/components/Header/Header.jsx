@@ -8,11 +8,23 @@ import { Headset, LayoutDashboard, LogOut, Settings, UserRoundPen } from 'lucide
 
 
 const Header = () => {
-    const { user } = useAuth();
+    const { user, logOut } = useAuth();
     const links = <>
         <li><NavLink to='/find-jobs'>Find Jobs</NavLink></li>
         <li><NavLink to='/for-employers'>For Employers</NavLink></li>
     </>
+
+    const handelLogOut = () => {
+        logOut()
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+
     return (
         <motion.div
             initial={{ y: -50, opacity: 0 }}
@@ -75,7 +87,7 @@ const Header = () => {
                                             <Link to="/profile" className="flex items-center gap-2">
                                                 <UserRoundPen size={14} /> Profile
                                             </Link>
-                                            <Link to="/dashboard" className="flex items-center gap-2">
+                                            <Link to="/my-dashboard" className="flex items-center gap-2">
                                                 <LayoutDashboard size={14} /> Dashboard
                                             </Link>
                                             <Link to="/settings" className="flex items-center gap-2">
@@ -86,7 +98,7 @@ const Header = () => {
                                             </Link>
                                             <hr className="border-t border-gray-300 my-2" />
 
-                                            <button className="flex items-center gap-2 text-left">
+                                            <button onClick={() => handelLogOut()} className="flex cursor-pointer items-center gap-2 text-left">
                                                 <LogOut size={14} /> Log out
                                             </button>
                                         </div>
@@ -96,7 +108,7 @@ const Header = () => {
                                 </div>
                             </> : <>
                                 <div>
-                                    <Link to='/auth/login' className=''>Login</Link>
+                                    <Link to='/auth/login' className='me-3'>Login</Link>
                                     <Link to='/auth/signup'
                                         className='px-4 py-2 rounded-md text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:text-black transition transform'>
                                         Sign Up
@@ -105,13 +117,6 @@ const Header = () => {
                             </>
                         }
                     </div>
-
-
-
-
-
-
-
 
 
                 </div>
