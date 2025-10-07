@@ -4,15 +4,30 @@ import Logo from '../../../components/Logo/Logo';
 import { ArrowLeft, Mail, Lock, Eye, EyeOff, User, Briefcase } from 'lucide-react';
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from 'react-hook-form';
+import useAuth from '../../../hooks/useAuth';
 
 const SignUp = () => {
-
+    const { createUser, updateUserProfile } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const selectedRole = watch("role");
+
     const onSubmit = (data) => {
-        console.log(data)
+        createUser(data.email, data.password)
+            .then((res) => {
+                console.log(res)
+
+                // Update user profile
+                const userProfile = {
+                    displayName: data.name,
+                }
+                updateUserProfile(userProfile);
+            })
+            .catch((error) => {
+                console.log(error)
+            });
     }
+
     return (
         <div>
             <div className='hero-bg h-[100vh] flex justify-center items-center'>
@@ -75,10 +90,10 @@ const SignUp = () => {
                                             value: 6,
                                             message: 'Password must be at least 6 characters'
                                         },
-                                        pattern: {
-                                            value: /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-                                            message: "Password must contain at least one uppercase, one number, and one special character",
-                                        }
+                                        // pattern: {
+                                        //     value: /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+                                        //     message: "Password must contain at least one uppercase, one number, and one special character",
+                                        // }
                                     })}
                                     className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-violet-500"
                                 />
@@ -136,11 +151,11 @@ const SignUp = () => {
                             type="submit"
                             className="text-white w-full cursor-pointer bg-gradient-to-br from-violet-500 to-blue-500 hover:bg-gradient-to-bl rounded-md px-5 py-2.5 text-center me-2 mb-2"
                         >
-                            Login
+                            Sign Up
                         </button>
                     </form>
 
-          
+
 
                     <p className="text-center text-sm text-gray-600 mt-5">
                         Already have an account?{" "}

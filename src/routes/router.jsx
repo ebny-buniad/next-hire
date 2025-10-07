@@ -4,6 +4,7 @@ import LandingPage from "../pages/LandingPage/LandingPage";
 import AuthLayout from "../layouts/AuthLayout/AuthLayout";
 import Login from "../pages/Authentication/Login/Login";
 import SignUp from "../pages/Authentication/SignUp/SignUp";
+import FindJobs from "../pages/FindJobs/FindJobs";
 
 const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true, Component: LandingPage,
+            },
+            {
+                path: 'find-jobs',
+                Component: FindJobs
             }
         ]
     },
