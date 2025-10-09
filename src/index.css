@@ -15,6 +15,28 @@
   }
 }
 
+/* Remove arrows for inputs with class 'no-arrow' */
+
+/* Chrome, Safari, Edge, Opera */
+.no-arrow::-webkit-outer-spin-button,
+.no-arrow::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove on focus as well */
+.no-arrow:focus::-webkit-outer-spin-button,
+.no-arrow:focus::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.no-arrow {
+  -moz-appearance: textfield; /* hides spinner */
+}
+
+
 .hero-bg {
   background-image: url('https://i.pinimg.com/736x/b6/37/7e/b6377e4635496e95476c5c4cdbc7aaea.jpg');
   background-repeat: no-repeat;
@@ -24,4 +46,27 @@
 
 .bg-glass {
   background-color: white;
+}
+
+.loader {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.loader:before , .loader:after{
+  content: '';
+  border-radius: 50%;
+  position: absolute;
+  inset: 0;
+  /* box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3) inset; */
+}
+.loader:after {
+  box-shadow: 0 2px 0 #880bfd inset;
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0% {  transform: rotate(0)}
+  100% { transform: rotate(360deg)}
 }
