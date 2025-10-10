@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '../../components/Container/Container';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure'
 import Loading from '../../components/Loading/Loading';
-import { Link, Outlet } from 'react-router';
 import { useForm } from 'react-hook-form';
-import { FileUser } from 'lucide-react';
+import { Camera, FileUser } from 'lucide-react';
 import { FileUploaderRegular } from '@uploadcare/react-uploader';
 import '@uploadcare/react-uploader/core.css';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const Profile = () => {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [file, setFile] = useState(null);
 
     const { data, isPending } = useQuery({
         queryKey: ['account-data', user?.email],
@@ -45,7 +47,6 @@ const Profile = () => {
         if (profile_Details) {
             try {
                 const res = await axiosSecure.put(`/api/profiles?email=${user?.email}`, profileInfo);
-                console.log(res.data);
                 if (res.data.modifiedCount === 1) {
                     toast.success("Update successful");
                 }
@@ -69,6 +70,39 @@ const Profile = () => {
         }
     };
 
+    const handleFileChange = (e) => {
+        const newFile = e.target.files[0];
+        if (newFile) {
+            setFile(newFile);
+            setSelectedImage(URL.createObjectURL(newFile));
+        }
+    };
+
+    const handleSave = async () => {
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("image", file);
+
+        try {
+            const imageBbUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imageBB}`;
+            const res = await axios.post(imageBbUrl, formData);
+
+            const imageUrl = res.data.data.url;
+            const response = await axiosSecure.put(
+                `/api/users?email=${user?.email}`,
+                { photoURL: imageUrl }
+            );
+            
+            if (response.data.data.modifiedCount === 1) {
+                toast.success('Photo added');
+            } else {
+                toast.error('Some error');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 
     return (
         <div className='py-15'>
@@ -79,9 +113,46 @@ const Profile = () => {
 
                 <div className='mt-5 grid lg:grid-cols-4 gap-10'>
                     <div className='flex flex-col items-center text-center gap-6  shadow rounded-2xl pb-5'>
-                        <img className='w-26 rounded-full mt-5 border-2 border-dotted border-purple-500 p-1'
-                            alt="profile"
-                            src={photoURL ? photoURL : 'https://img.freepik.com/free-photo/portrait-3d-male-doctor_23-2151107071.jpg'} />
+                        <div className="relative w-28">
+                            {/* Profile Image */}
+                            <img
+                                className="w-28 h-28 rounded-full mt-5 border-2 border-dotted border-purple-500 p-1 object-cover"
+                                alt="profile"
+                                src={
+                                    selectedImage
+                                        ? selectedImage
+                                        : photoURL ||
+                                        "https://img.freepik.com/free-photo/portrait-3d-male-doctor_23-2151107071.jpg"
+                                }
+                            />
+
+                            {/* Hidden file input */}
+                            <input
+                                id="profilePic"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                className="hidden"
+                            />
+                            <label
+                                htmlFor="profilePic"
+                                className="absolute bottom-2 right-0 bg-purple-600 p-2 rounded-full cursor-pointer text-white shadow"
+                            >
+                                <Camera size={18} />
+                            </label>
+                        </div>
+
+                        {/* Save button */}
+                        {selectedImage && (
+                            <button
+                                onClick={handleSave}
+                                className="mt- px-4 py-1 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
+                            >
+                                Save
+                            </button>
+                        )}
+
+
                         <div className='space-y-1'>
                             <h3 className='text-xl font-semibold'>{name}</h3>
                             <p className='text-gray-500'>{email}</p>
