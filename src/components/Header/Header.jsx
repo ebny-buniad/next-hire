@@ -6,9 +6,9 @@ import Logo from '../Logo/Logo';
 import useAuth from '../../hooks/useAuth';
 import { Headset, LayoutDashboard, LogOut, Settings, UserRoundPen } from 'lucide-react';
 
-
 const Header = () => {
     const { user, logOut } = useAuth();
+
     const links = <>
         <li><NavLink to='/find-jobs'>Find Jobs</NavLink></li>
         <li><NavLink to='/for-employers'>For Employers</NavLink></li>
@@ -16,22 +16,19 @@ const Header = () => {
 
     const handelLogOut = () => {
         logOut()
-            .then((res) => {
-                console.log(res);
+            .then(() => {
             })
-            .catch((error) => {
-                console.log(error)
+            .catch(() => {
             })
     }
-
 
     return (
         <motion.div
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className='backdrop-blur-sm shadow-sm fixed w-full z-50'
-        >
+            className='backdrop-blur-sm shadow-sm fixed w-full z-50'>
+
             <Container>
                 <div className="navbar px-0">
                     <div className="navbar-start">
@@ -63,23 +60,21 @@ const Header = () => {
                         {
                             user ? <>
                                 <div className="dropdown dropdown-end">
-                                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                        <div className="w-17 rounded-md">
-                                            <img
-                                                alt="profile"
-                                                src={user.photoURL ? user.photoURL : 'https://img.freepik.com/free-photo/portrait-3d-male-doctor_23-2151107071.jpg'} />
+                                    <div tabIndex={0} role="button" className="cursor-pointer border-dashed border border-blue-500 rounded-full p-1">
+                                        <div className="w-10 h-10 bg-violet-500 flex items-center justify-center rounded-full">
+                                            <p className='text-xl text-white'>{user.displayName.slice(0, 1)}</p>
                                         </div>
                                     </div>
                                     <ul
                                         tabIndex={0}
                                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-5 w-62 p-3 shadow">
                                         <div className='flex gap-2 border-b border-gray-300 pb-2'>
-                                            <img className='w-14 rounded-md'
-                                                alt="profile"
-                                                src={user.photoURL ? user.photoURL : 'https://img.freepik.com/free-photo/portrait-3d-male-doctor_23-2151107071.jpg'} />
+                                            <div className="w-14 h-14 bg-gray-200 flex items-center justify-center rounded-md">
+                                                <p className='text-3xl text-violet-500'>{user.displayName.slice(0, 1)}</p>
+                                            </div>
                                             <div>
                                                 <p className='text-xl font-semibold'>{user.displayName}</p>
-                                                <Link className='text-white text-xs p-1 rounded bg-violet-500  items-center gap-2 justify-center inline-block'>Edit Profile</Link>
+                                                <Link to='/profile' className='text-white text-xs p-1 rounded bg-violet-500  items-center gap-2 justify-center inline-block'>Edit Profile</Link>
                                             </div>
                                         </div>
 
@@ -102,8 +97,6 @@ const Header = () => {
                                                 <LogOut size={14} /> Log out
                                             </button>
                                         </div>
-
-
                                     </ul>
                                 </div>
                             </> : <>
@@ -117,8 +110,6 @@ const Header = () => {
                             </>
                         }
                     </div>
-
-
                 </div>
             </Container>
         </motion.div>

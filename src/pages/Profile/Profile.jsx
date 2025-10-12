@@ -39,10 +39,10 @@ const Profile = () => {
     }
 
     const { name, email, role, photoURL } = AC_details;
-    const { phone, country, address, education, experience, linkedin } = profile_Details || {};
+    const { phone, country, address, education, experience, linkedin, skills } = profile_Details || {};
 
     const onSubmit = async (data) => {
-        const profileInfo = { ...data, email };
+        const profileInfo = { ...data, email, role };
 
         if (profile_Details) {
             try {
@@ -88,11 +88,12 @@ const Profile = () => {
             const res = await axios.post(imageBbUrl, formData);
 
             const imageUrl = res.data.data.url;
+
             const response = await axiosSecure.put(
                 `/api/users?email=${user?.email}`,
                 { photoURL: imageUrl }
             );
-            
+
             if (response.data.data.modifiedCount === 1) {
                 toast.success('Photo added');
             } else {
@@ -112,52 +113,59 @@ const Profile = () => {
                 </div>
 
                 <div className='mt-5 grid lg:grid-cols-4 gap-10'>
-                    <div className='flex flex-col items-center text-center gap-6  shadow rounded-2xl pb-5'>
-                        <div className="relative w-28">
-                            {/* Profile Image */}
-                            <img
-                                className="w-28 h-28 rounded-full mt-5 border-2 border-dotted border-purple-500 p-1 object-cover"
-                                alt="profile"
-                                src={
-                                    selectedImage
-                                        ? selectedImage
-                                        : photoURL ||
-                                        "https://img.freepik.com/free-photo/portrait-3d-male-doctor_23-2151107071.jpg"
-                                }
-                            />
+                    <div className='flex flex-col items-center justify-between text-center gap-6  shadow rounded-2xl pb-5'>
+                        <div>
+                            <div className="relative w-28 mx-auto">
+                                {/* Profile Image */}
+                                <img
+                                    className="w-28 h-28 rounded-full mt-5 border-2 border-dotted border-purple-500 p-1 object-cover"
+                                    alt="profile"
+                                    src={
+                                        selectedImage
+                                            ? selectedImage
+                                            : photoURL ||
+                                            "https://img.freepik.com/free-photo/portrait-3d-male-doctor_23-2151107071.jpg"
+                                    }
+                                />
 
-                            {/* Hidden file input */}
-                            <input
-                                id="profilePic"
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileChange}
-                                className="hidden"
-                            />
-                            <label
-                                htmlFor="profilePic"
-                                className="absolute bottom-2 right-0 bg-purple-600 p-2 rounded-full cursor-pointer text-white shadow"
-                            >
-                                <Camera size={18} />
-                            </label>
+                                {/* Hidden file input */}
+                                <input
+                                    id="profilePic"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                    className="hidden"
+                                />
+                                <label
+                                    htmlFor="profilePic"
+                                    className="absolute bottom-2 right-0 bg-purple-600 p-2 rounded-full cursor-pointer text-white shadow"
+                                >
+                                    <Camera size={18} />
+                                </label>
+                            </div>
+
+                            {/* Save button */}
+                            {selectedImage && (
+                                <button
+                                    onClick={handleSave}
+                                    className="mt-3 px-4 py-1 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
+                                >
+                                    Save
+                                </button>
+                            )}
+
+                            <div className='space-y-1 mt-3'>
+                                <h3 className='text-xl font-semibold'>{name}</h3>
+                                <p className='text-gray-500'>{email}</p>
+                                <p className='text-gray-500 uppercase'>{role}</p>
+                            </div>
                         </div>
 
-                        {/* Save button */}
-                        {selectedImage && (
-                            <button
-                                onClick={handleSave}
-                                className="mt- px-4 py-1 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
-                            >
-                                Save
-                            </button>
-                        )}
-
-
-                        <div className='space-y-1'>
-                            <h3 className='text-xl font-semibold'>{name}</h3>
-                            <p className='text-gray-500'>{email}</p>
-                            <p className='text-gray-500 uppercase'>{role}</p>
+                        <div>
+                            {user.emailVerified === false ? <p className='bg-red-100 py-1 text-xs px-3 rounded-full text-red-600'>Account unverified</p> : 
+                            <p className='bg-green-100 py-1 text-xs px-3 rounded-full text-green-600'>Account verified</p>}
                         </div>
+
                     </div>
                     <div className='lg:col-span-3 shadow p-5 rounded-2xl'>
                         <h3 className='mb-8 font-semibold text-xl flex items-center gap-1 text-gray-500'><FileUser size={20} />{profile_Details ? 'Update Information' : 'Add Information'}</h3>
@@ -256,6 +264,18 @@ const Profile = () => {
                                     className="input input-bordered w-full border-0 bg-gray-100 py-6"
                                 />
                                 {errors.linkedin && <p className="text-red-500 text-sm">{errors.linkedin.message}</p>}
+                            </div>
+
+                            {/* Add your skills */}
+                            <div>
+                                <label className="block font-medium">Add Your Skills (Separate ",")*</label>
+                                <input
+                                    defaultValue={skills}
+                                    type="text"
+                                    {...register("skills", { required: "Name is required" })}
+                                    className="input input-bordered w-full border-0 bg-gray-100 py-6"
+                                />
+                                {errors.skills && <p className="text-red-500 text-sm">{errors.skills.message}</p>}
                             </div>
 
                             {/* Resume Drive Link */}
