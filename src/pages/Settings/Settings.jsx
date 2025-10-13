@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import deleteGif from '../../assets/delete.gif'
 
 const Settings = () => {
     const { user, emailVerified, setNewPassword, deleteUserAccount } = useAuth();
@@ -73,8 +74,7 @@ const Settings = () => {
                             toast.success("Account Deleted")
                         }
                     })
-                    .catch((error) => {
-                        console.log(error)
+                    .catch(() => {
                     })
             }
         } catch (error) {
@@ -108,7 +108,7 @@ const Settings = () => {
                                 className="px-6 py-3 text-gray-600 cursor-pointer transition-all duration-300 hover:text-purple-600"
                                 selectedClassName="text-purple-600 font-semibold border-b-1 border-purple-600"
                             >
-                                Security
+                                Plans & Billings
                             </Tab>
                             <Tab
                                 className="px-6 py-3 text-gray-600 cursor-pointer transition-all duration-300 hover:text-purple-600"
@@ -128,7 +128,7 @@ const Settings = () => {
                                             Your account is not verified
                                         </span>}
                                     </p>
-                                    <button onClick={() => handelVerify()} className='btn mt- bg-violet-500 text-white
+                                    <button onClick={() => handelVerify()} className='btn px-5 bg-violet-500 text-white
                                     rounded-full'>{user.emailVerified === true ? 'Verified' : 'Verify'}</button>
                                 </div>
 
@@ -142,7 +142,7 @@ const Settings = () => {
                                                 type={showOld ? "text" : "password"}
                                                 placeholder="Enter old password"
                                                 {...register("oldPassword", { required: "Old password is required" })}
-                                                className="input input-bordered w-full pr-10 border-gray-200"
+                                                className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-violet-500"
                                             />
                                             <button
                                                 type="button"
@@ -169,7 +169,7 @@ const Settings = () => {
                                                         message: "Password must be at least 6 characters",
                                                     },
                                                 })}
-                                                className="input input-bordered w-full pr-10 border-gray-200"
+                                                className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-violet-500"
                                             />
                                             <button
                                                 type="button"
@@ -194,7 +194,7 @@ const Settings = () => {
                                                     validate: (value) =>
                                                         value === newPassword || "Passwords do not match",
                                                 })}
-                                                className="input input-bordered w-full pr-10 border-gray-200"
+                                                className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-violet-500"
                                             />
                                             <button
                                                 type="button"
@@ -209,7 +209,7 @@ const Settings = () => {
                                         </div>
 
                                         {/* Submit Button */}
-                                        <button type="submit" className="btn bg-violet-500 text-white mt-3 px-10 rounded-full">
+                                        <button type="submit" className="btn bg-violet-500 text-white mt-3 px-5 rounded-full">
                                             Save
                                         </button>
                                     </form>
@@ -218,7 +218,7 @@ const Settings = () => {
                                 <div className='shadow md:w-2xl p-3 rounded-xl space-y-2'>
                                     <h4 className='text-xl font-semibold mb-5 flex items-center gap-1'><Trash size={20} />Delete Account</h4>
 
-                                    <button className="btn rounded-full bg-violet-500 text-white px-8"
+                                    <button className="btn rounded-full bg-violet-500 text-white px-5"
                                         onClick={() => document.getElementById('delete_account').showModal()}>Delete</button>
                                 </div>
 
@@ -255,7 +255,8 @@ const Settings = () => {
                         <form method="dialog">
                             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
-                        <h3 className='mb-10 mt-3 text-2xl text-red-500'>Delete Account</h3>
+                        <img className='w-20 mx-auto' src={deleteGif} alt="" />
+                        <h3 className='mb-10 mt-2  text-center font-semibold text-red-500'>Delete your "next hire" account</h3>
                         <form onSubmit={handleDeleteSubmit(handelDelete)}>
                             <div className="relative">
                                 <label className="block text-sm font-medium mb-1">Your Password</label>
@@ -263,7 +264,7 @@ const Settings = () => {
                                     type={showOld ? "text" : "password"}
                                     placeholder="Enter your password"
                                     {...deleteRegister("existPass", { required: "Password is required" })}
-                                    className="input input-bordered w-full pr-10 border-gray-200"
+                                    className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-violet-500"
                                 />
                                 <button
                                     type="button"
@@ -277,7 +278,7 @@ const Settings = () => {
                                 )}
                             </div>
 
-                            <button type="submit" className="btn bg-violet-500 text-white mt-3 px-10 rounded-full">
+                            <button type="submit" className="btn bg-violet-500 text-white mt-3 px-5 rounded-full">
                                 Delete
                             </button>
                         </form>

@@ -58,7 +58,6 @@ const AuthProvider = ({ children }) => {
     }
 
     // Delete a user
-
     const deleteUserAccount = () =>{
         return deleteUser(user);
     }
