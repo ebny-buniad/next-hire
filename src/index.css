@@ -36,6 +36,10 @@
   -moz-appearance: textfield; /* hides spinner */
 }
 
+.swal-top {
+  z-index: 9999 !important;
+}
+
 
 .hero-bg {
   background-image: url('https://i.pinimg.com/736x/b6/37/7e/b6377e4635496e95476c5c4cdbc7aaea.jpg');

@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import Container from '../../components/Container/Container';
-import { BadgeCheck, Brain, Eye, EyeOff, Lock } from 'lucide-react';
+import { BadgeCheck, Brain, Eye, EyeOff, Lock, Trash } from 'lucide-react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Settings = () => {
-
-    const { user, emailVerified, setNewPassword } = useAuth();
+    const { user, emailVerified, setNewPassword, deleteUserAccount } = useAuth();
+    const axiosSecure = useAxiosSecure();
 
     // Password visibility states
     const [showOld, setShowOld] = useState(false);
     const [showNew, setShowNew] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 
+    // User email account verify
     const handelVerify = () => {
         emailVerified()
             .then(() => {
@@ -29,22 +31,21 @@ const Settings = () => {
     };
 
     const { register, handleSubmit, formState: { errors }, watch, setError } = useForm();
+    const { register: deleteRegister, handleSubmit: handleDeleteSubmit,
+        formState: { errors: deleteErrors }, setError: deleteSetError } = useForm();
     const newPassword = watch("newPassword");
 
-    const onSubmit = async (data) => {
-        console.log(data)
+    // Change old password
+    const handelChangePass = async (data) => {
         try {
             const credential = EmailAuthProvider.credential(user?.email, data.oldPassword);
             const res = await reauthenticateWithCredential(user, credential);
-            console.log(res);
             if (res.operationType === "reauthenticate") {
-                console.log('Yaaa')
                 setNewPassword(data.newPassword)
                     .then(() => {
                         toast.success("Password Change");
                     })
-                    .catch((error) => {
-                        console.log(error)
+                    .catch(() => {
                     })
             }
         } catch (error) {
@@ -56,6 +57,35 @@ const Settings = () => {
             }
         }
     };
+
+    // Delete account 
+    const handelDelete = async (data) => {
+        try {
+            const credential = EmailAuthProvider.credential(user?.email, data.existPass);
+            const res = await reauthenticateWithCredential(user, credential);
+            if (res.operationType === "reauthenticate") {
+                deleteUserAccount()
+                    .then(async () => {
+                        const res = await axiosSecure.delete(`http://localhost:3000/api/users?email=${user.email}`);
+                        if (res.data.data.profileDelete.deletedCount === 1 ||
+                            res.data.data.userDelete.deletedCount === 1
+                        ) {
+                            toast.success("Account Deleted")
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            }
+        } catch (error) {
+            if (error) {
+                deleteSetError("existPass", {
+                    type: "manual",
+                    message: "Your password is wrong!",
+                });
+            }
+        }
+    }
 
     return (
         <div className='py-15 text-gray-600'>
@@ -90,13 +120,13 @@ const Settings = () => {
 
                         {/* Tab Panels */}
                         <TabPanel>
-                            <div className="transition-all duration-500 ease-in-out transform space-y-5">
+                            <div className="transition-all duration-500 ease-in-out transform space-y-10">
                                 <div className='shadow md:w-2xl p-3 rounded-xl space-y-2'>
                                     <h4 className='text-xl font-semibold mb-5 flex items-center gap-1'><BadgeCheck size={20} />Account Verification</h4>
                                     <p>
-                                        {user.emailVerified === false && <p className='bg-red-100 text-[12px] inline-block text-red-600 py-1 px-3 rounded-full'>
+                                        {user.emailVerified === false && <span className='bg-red-100 text-[12px] inline-block text-red-600 py-1 px-3 rounded-full'>
                                             Your account is not verified
-                                        </p>}
+                                        </span>}
                                     </p>
                                     <button onClick={() => handelVerify()} className='btn mt- bg-violet-500 text-white
                                     rounded-full'>{user.emailVerified === true ? 'Verified' : 'Verify'}</button>
@@ -104,7 +134,7 @@ const Settings = () => {
 
                                 <div className='shadow md:w-2xl p-3 rounded-xl space-y-2'>
                                     <h4 className='text-xl font-semibold mb-5 flex items-center gap-1'><Lock size={20} />Change Password</h4>
-                                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                                    <form onSubmit={handleSubmit(handelChangePass)} className="space-y-4">
                                         {/* Old Password */}
                                         <div className="relative">
                                             <label className="block text-sm font-medium mb-1">Old Password</label>
@@ -184,6 +214,14 @@ const Settings = () => {
                                         </button>
                                     </form>
                                 </div>
+
+                                <div className='shadow md:w-2xl p-3 rounded-xl space-y-2'>
+                                    <h4 className='text-xl font-semibold mb-5 flex items-center gap-1'><Trash size={20} />Delete Account</h4>
+
+                                    <button className="btn rounded-full bg-violet-500 text-white px-8"
+                                        onClick={() => document.getElementById('delete_account').showModal()}>Delete</button>
+                                </div>
+
                             </div>
                         </TabPanel>
 
@@ -210,6 +248,41 @@ const Settings = () => {
                         </TabPanel>
                     </Tabs>
                 </div>
+
+
+                <dialog id="delete_account" className="modal">
+                    <div className="modal-box">
+                        <form method="dialog">
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        </form>
+                        <h3 className='mb-10 mt-3 text-2xl text-red-500'>Delete Account</h3>
+                        <form onSubmit={handleDeleteSubmit(handelDelete)}>
+                            <div className="relative">
+                                <label className="block text-sm font-medium mb-1">Your Password</label>
+                                <input
+                                    type={showOld ? "text" : "password"}
+                                    placeholder="Enter your password"
+                                    {...deleteRegister("existPass", { required: "Password is required" })}
+                                    className="input input-bordered w-full pr-10 border-gray-200"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowOld(!showOld)}
+                                    className="absolute right-3 top-[30px] text-gray-500"
+                                >
+                                    {showOld ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                                {deleteErrors.existPass && (
+                                    <p className="text-red-500 text-sm mt-1">{deleteErrors.existPass.message}</p>
+                                )}
+                            </div>
+
+                            <button type="submit" className="btn bg-violet-500 text-white mt-3 px-10 rounded-full">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </dialog>
             </Container>
         </div>
     );

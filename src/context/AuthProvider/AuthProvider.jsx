@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AuthContext } from '../AuthContext/AuthContext';
 import { auth } from '../../../firebase.config'
 import {
-    createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification,
+    createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, sendEmailVerification,
     signInWithEmailAndPassword, signOut, updatePassword, updateProfile
 } from 'firebase/auth';
 const AuthProvider = ({ children }) => {
@@ -53,9 +53,14 @@ const AuthProvider = ({ children }) => {
     }
 
     // Set a user's password
-
     const setNewPassword = (newPassword) => {
         return updatePassword(user, newPassword);
+    }
+
+    // Delete a user
+
+    const deleteUserAccount = () =>{
+        return deleteUser(user);
     }
 
 
@@ -69,7 +74,8 @@ const AuthProvider = ({ children }) => {
         updateUserProfile,
         logOut,
         emailVerified,
-        setNewPassword
+        setNewPassword,
+        deleteUserAccount
     }
 
     return (

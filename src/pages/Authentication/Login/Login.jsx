@@ -9,7 +9,7 @@ import useAuth from '../../../hooks/useAuth';
 const Login = () => {
     const { signInUser } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
-    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const { register, handleSubmit, formState: { errors }, setError } = useForm();
     const location = useLocation();
     const naigate = useNavigate();
 
@@ -20,7 +20,12 @@ const Login = () => {
                 naigate(location?.state?.pathname || '/')
             })
             .catch((error) => {
-                console.log(error)
+                if (error) {
+                    setError("password", {
+                        type: "manual",
+                        message: "Password or email is wrong"
+                    })
+                }
             })
     }
 
