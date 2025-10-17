@@ -28,7 +28,7 @@ const Features = () => {
                         return (
                             <div data-aos="fade-up" key={index} className="flex items-start gap-4 p-4 mb-3
                              hover:bg-gray-100 rounded-xl transition ease-in-out cursor-pointer">
-                                <div className='rounded-md px-3 py-3 bg-blue-100'>
+                                <div className='rounded-lg px-3 py-3 bg-blue-100'>
                                     <Icon className="text-blue-600 w-6 h-6" />
                                 </div>
                                 <div>
@@ -49,7 +49,7 @@ const Features = () => {
                         return (
                             <div data-aos="fade-up" key={index} className="flex items-start gap-4 p-4 mb-3
                              hover:bg-gray-100 rounded-xl transition ease-in-out cursor-pointer">
-                                <div className='rounded-md px-3 py-3 bg-purple-100'>
+                                <div className='rounded-lg px-3 py-3 bg-purple-100'>
                                     <Icon className="text-purple-600 w-6 h-6" />
                                 </div>
                                 <div>

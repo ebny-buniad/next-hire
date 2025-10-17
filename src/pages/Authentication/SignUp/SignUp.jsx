@@ -35,11 +35,9 @@ const SignUp = () => {
 
                 // Send user info in DB
                 const res = await axiosInstance.post('/api/users', userInfo);
-                console.log(res);
-                if (res.data.insertedId) {
+                if (res.data.user.insertedId) {
                     navigate('/')
                 }
-
             })
             .catch((error) => {
                 if (error.code === "auth/email-already-in-use") {
@@ -169,7 +167,7 @@ const SignUp = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="text-white w-full cursor-pointer bg-gradient-to-br from-violet-500 to-blue-500 hover:bg-gradient-to-bl rounded-md px-5 py-2.5 text-center me-2 mb-2"
+                            className="text-white w-full cursor-pointer bg-gradient-to-br from-violet-500 to-blue-500 hover:bg-gradient-to-bl rounded-lg px-5 py-2.5 text-center me-2 mb-2"
                         >
                             Sign Up
                         </button>

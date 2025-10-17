@@ -10,6 +10,8 @@ import Profile from "../pages/Profile/Profile";
 import Settings from "../pages/Settings/Settings";
 import Support from "../pages/Support/Support";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
+import AddPlans from "../pages/Dashboard/Admin/AddPlans";
+import MyPlans from "../pages/Dashboard/Admin/MyPlans";
 
 const router = createBrowserRouter([
     {
@@ -52,10 +54,17 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: '/my-dashboard',
+        path: '/dashboard',
         element: <PrivateRouter><DashboardLayout></DashboardLayout></PrivateRouter>,
         children: [
-
+            {
+                path: 'add-plans',
+                Component: AddPlans
+            },
+            {
+                path: 'my-plans',
+                Component: MyPlans
+            }
         ]
     }
 ]);

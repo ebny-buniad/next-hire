@@ -88,7 +88,7 @@ const Login = () => {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="text-white w-full cursor-pointer bg-gradient-to-br from-violet-500 to-blue-500 hover:bg-gradient-to-bl rounded-md px-5 py-2.5 text-center me-2 mb-2"
+                        className="text-white w-full cursor-pointer bg-gradient-to-br from-violet-500 to-blue-500 hover:bg-gradient-to-bl rounded-lg px-5 py-2.5 text-center me-2 mb-2"
                     >
                         Login
                     </button>
@@ -102,7 +102,7 @@ const Login = () => {
 
                 <div>
                     <button className='w-full border border-gray-300 
-                    flex items-center justify-center gap-2 py-2 rounded-md cursor-pointer hover:border-violet-500 transition'><FcGoogle size={20} />Login with Google</button>
+                    flex items-center justify-center gap-2 py-2 rounded-lg cursor-pointer hover:border-violet-500 transition'><FcGoogle size={20} />Login with Google</button>
                 </div>
 
 

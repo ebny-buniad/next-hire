@@ -69,7 +69,7 @@ const Header = () => {
                                         tabIndex={0}
                                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-5 w-62 p-3 shadow">
                                         <div className='flex gap-2 border-b border-gray-300 pb-2'>
-                                            <div className="w-14 h-14 bg-gray-200 flex items-center justify-center rounded-md">
+                                            <div className="w-14 h-14 bg-gray-200 flex items-center justify-center rounded-lg">
                                                 <p className='text-3xl text-violet-500'>{user?.displayName?.slice(0, 1) || user?.email?.slice(0, 1).toUpperCase() || "U"}</p>
                                             </div>
                                             <div>
@@ -82,7 +82,7 @@ const Header = () => {
                                             <Link to="/profile" className="flex items-center gap-2">
                                                 <UserRoundPen size={14} /> Profile
                                             </Link>
-                                            <Link to="/my-dashboard" className="flex items-center gap-2">
+                                            <Link to="/dashboard" className="flex items-center gap-2">
                                                 <LayoutDashboard size={14} /> Dashboard
                                             </Link>
                                             <Link to="/settings" className="flex items-center gap-2">
@@ -103,7 +103,7 @@ const Header = () => {
                                 <div>
                                     <Link to='/auth/login' className='me-3'>Login</Link>
                                     <Link to='/auth/signup'
-                                        className='px-4 py-2 rounded-md text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:text-black transition transform'>
+                                        className='px-4 py-2 rounded-lg text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:text-black transition transform'>
                                         Sign Up
                                     </Link>
                                 </div>
