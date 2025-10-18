@@ -30,9 +30,10 @@ const MyPlans = () => {
                 text: "You want to delete this plan!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#8e51ff",
-                cancelButtonColor: "#ff3d41",
-                confirmButtonText: "Delete"
+                confirmButtonColor: "#FF0000",
+                cancelButtonColor: "#868683",
+                confirmButtonText: "Yes, Delete!",
+                cancelButtonText: "No, Keep it.",
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     const res = await axiosSecure.delete(`/api/plans/${id}`);
