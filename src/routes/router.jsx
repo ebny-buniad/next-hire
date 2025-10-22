@@ -12,6 +12,8 @@ import Support from "../pages/Support/Support";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import AddPlans from "../pages/Dashboard/Admin/AddPlans";
 import MyPlans from "../pages/Dashboard/Admin/MyPlans";
+import CompanyProfile from "../pages/Dashboard/Employer/CompanyProfile";
+import CreateCompanyProfile from "../pages/Dashboard/Employer/CreateCompanyProfile";
 
 const router = createBrowserRouter([
     {
@@ -64,6 +66,14 @@ const router = createBrowserRouter([
             {
                 path: 'my-plans',
                 Component: MyPlans
+            },
+            {
+                path: 'company-profile',
+                Component: CompanyProfile
+            },
+            {
+                path: 'create-company-profile',
+                Component: CreateCompanyProfile
             }
         ]
     }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Outlet } from "react-router";
-import { HandCoins, Menu, Plus, X } from "lucide-react";
+import { Building2, HandCoins, Menu, Plus, X } from "lucide-react";
 import Logo from "../../components/Logo/Logo";
 
 const DashboardLayout = () => {
@@ -10,6 +10,7 @@ const DashboardLayout = () => {
         { name: "Dashboard", path: "/dashboard", },
         { name: "Add plans", path: "/dashboard/add-plans", icon: <Plus size={16} /> },
         { name: "My Plans", path: "/dashboard/my-plans", icon: <HandCoins size={16} /> },
+        { name: "Company profile", path: "/dashboard/company-profile", icon: <Building2 size={16} /> },
         { name: "Logout", path: "/logout" },
     ];
 
@@ -59,7 +60,7 @@ const DashboardLayout = () => {
                 </header>
 
                 {/* Outlet area */}
-                <main className="p-6 overflow-auto flex-1 ">
+                <main className="p-3 overflow-auto flex-1 ">
                     <Outlet />
                 </main>
             </div>

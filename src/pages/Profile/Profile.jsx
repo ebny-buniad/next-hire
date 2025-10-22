@@ -39,7 +39,6 @@ const Profile = () => {
     }
 
     const { name, email, role, photoURL } = AC_details;
-    console.log(name)
     const { phone, country, address, education, experience, linkedin, skills } = profile_Details || {};
 
     const onSubmit = async (data) => {

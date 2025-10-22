@@ -37,7 +37,7 @@ const AddPlans = () => {
     const watchFeatures = watch("features");
 
     return (
-        <div className='p-5 shadow border-gray-200 rounded-xl'>
+        <div>
             <DashboardPageTitle>Create Subscription plan</DashboardPageTitle>
 
             <div className='grid xl:grid-cols-2 gap-10'>

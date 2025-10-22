@@ -54,7 +54,7 @@ const MyPlans = () => {
     }
 
     return (
-        <div className="p-5 shadow border-gray-200 rounded-xl">
+        <div>
             <DashboardPageTitle>My Plans</DashboardPageTitle>
             <div className="overflow-x-auto bg-white rounded-xl  border-gray-100">
                 <table className="table">
