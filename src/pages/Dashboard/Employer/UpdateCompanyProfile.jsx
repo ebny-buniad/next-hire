@@ -5,10 +5,12 @@ import { Plus, Trash2, Upload } from "lucide-react";
 import DashboardPageTitle from '../../../components/DashboardPageTitle/DashboardPageTitle';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../../../components/Loading/Loading';
+import toast from 'react-hot-toast';
 
-const CreateCompanyProfile = () => {
+const UpdateCompanyProfile = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [logoPreview, setLogoPreview] = useState(null);
@@ -16,11 +18,25 @@ const CreateCompanyProfile = () => {
     const Navigate = useNavigate();
 
     const { register, control, handleSubmit, formState: { errors }, reset } = useForm();
-
     const { fields, append, remove } = useFieldArray({
         control,
         name: "socialLinks",
     });
+
+    // Load Company Data
+    const { data: companyInfo = {}, isLoading } = useQuery({
+        queryKey: ['company-profile-info', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/api/company?email=${user?.email}`);
+            return res.data.data;
+        }
+    });
+
+    const { companyName, about, website, size, industry, founded, address, phone } = companyInfo;
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
 
     //  Handle ImgBB Upload
     const handleImageUpload = async (e, field) => {
@@ -46,13 +62,12 @@ const CreateCompanyProfile = () => {
             ...data,
             logo: logoPreview,
             banner: bannerPreview,
-            email: user?.email
         };
         try {
-            const res = await axiosSecure.post('/api/company', companyInfo);
-            console.log('Data', res.data)
-            if (res.data.data.insertedId) {
-                toast.success('Profile created');
+            const res = await axiosSecure.put(`/api/company?email=${user?.email}`, companyInfo);
+            console.log('Data', res.data.data)
+            if (res.data.data.modifiedCount === 1) {
+                toast.success('Profile updated');
                 reset();
                 setTimeout(() => {
                     Navigate('/dashboard/company-profile');
@@ -68,13 +83,14 @@ const CreateCompanyProfile = () => {
 
     return (
         <div className='max-w-5xl mx-auto'>
-            <DashboardPageTitle>Create Company Profile</DashboardPageTitle>
+            <DashboardPageTitle>Update Company Profile</DashboardPageTitle>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 border border-gray-200 px-5 py-10 rounded-xl">
                 {/* Company Name */}
                 <div>
                     <label className="block font-medium mb-1">Company Name</label>
                     <input
+                        defaultValue={companyName}
                         {...register("companyName", { required: "Company name is required" })}
                         className="w-full border border-gray-200 rounded-lg p-2 focus:border-violet-500 focus:outline-none"
                         placeholder="Enter company name"
@@ -88,6 +104,7 @@ const CreateCompanyProfile = () => {
                 <div>
                     <label className="block font-medium mb-1">About</label>
                     <textarea
+                        defaultValue={about}
                         {...register("about", { required: "About section is required" })}
                         className="textarea textarea-bordered w-full border border-gray-200 rounded-lg p-2 focus:border-violet-500 focus:outline-none"
                         rows="4"
@@ -101,6 +118,7 @@ const CreateCompanyProfile = () => {
                     <div>
                         <label className="block font-medium mb-1">Founded</label>
                         <input
+                            defaultValue={founded}
                             type="number"
                             {...register("founded", { required: "Founded year required" })}
                             className="no-arrow w-full border border-gray-200 rounded-lg p-2 focus:border-violet-500 focus:outline-none"
@@ -113,6 +131,7 @@ const CreateCompanyProfile = () => {
                     <div>
                         <label className="block font-medium mb-1">Website</label>
                         <input
+                            defaultValue={website}
                             type="url"
                             {...register("website", { required: "Website URL required" })}
                             className="w-full border border-gray-200 rounded-lg p-2 focus:border-violet-500 focus:outline-none"
@@ -125,6 +144,7 @@ const CreateCompanyProfile = () => {
                     <div>
                         <label className="block font-medium mb-1">Industry</label>
                         <input
+                            defaultValue={industry}
                             {...register("industry", { required: "Industry required" })}
                             className="w-full border border-gray-200 rounded-lg p-2 focus:border-violet-500 focus:outline-none"
                             placeholder="e.g. Software, Finance"
@@ -136,6 +156,7 @@ const CreateCompanyProfile = () => {
                     <div>
                         <label className="block font-medium mb-1">Employees Size</label>
                         <input
+                            defaultValue={size}
                             {...register("size", { required: "Employees size required" })}
                             className="w-full border border-gray-200 rounded-lg p-2 focus:border-violet-500 focus:outline-none"
                             placeholder="e.g. 50-200"
@@ -151,6 +172,7 @@ const CreateCompanyProfile = () => {
                     <div>
                         <label className="block font-medium mb-1">Phone</label>
                         <input
+                            defaultValue={phone}
                             {...register("phone", { required: "Phone number required" })}
                             className="w-full border border-gray-200 rounded-lg p-2 focus:border-violet-500 focus:outline-none"
                             placeholder="e.g. +8801XXXXXXXXX"
@@ -162,6 +184,7 @@ const CreateCompanyProfile = () => {
                     <div>
                         <label className="block font-medium mb-1">Address</label>
                         <input
+                            defaultValue={address}
                             {...register("address", { required: "Address required" })}
                             className="w-full border border-gray-200 rounded-lg p-2 focus:border-violet-500 focus:outline-none"
                             placeholder="e.g. Banani, Dhaka, Bangladesh"
@@ -257,4 +280,4 @@ const CreateCompanyProfile = () => {
     );
 };
 
-export default CreateCompanyProfile;
+export default UpdateCompanyProfile;
