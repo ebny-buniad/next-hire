@@ -15,6 +15,7 @@ import MyPlans from "../pages/Dashboard/Admin/MyPlans";
 import CompanyProfile from "../pages/Dashboard/Employer/CompanyProfile";
 import CreateCompanyProfile from "../pages/Dashboard/Employer/CreateCompanyProfile";
 import UpdateCompanyProfile from "../pages/Dashboard/Employer/UpdateCompanyProfile";
+import PostJob from "../pages/Dashboard/Employer/PostJob";
 
 const router = createBrowserRouter([
     {
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
             {
                 path: 'update-company-profile',
                 Component: UpdateCompanyProfile
+            },
+            {
+                path: 'post-job',
+                Component: PostJob
             }
         ]
     }

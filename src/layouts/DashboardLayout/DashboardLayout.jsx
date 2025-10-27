@@ -11,6 +11,7 @@ const DashboardLayout = () => {
         { name: "Add plans", path: "/dashboard/add-plans", icon: <Plus size={16} /> },
         { name: "My Plans", path: "/dashboard/my-plans", icon: <HandCoins size={16} /> },
         { name: "Company profile", path: "/dashboard/company-profile", icon: <Building2 size={16} /> },
+        { name: "Post Job", path: "/dashboard/post-job", icon: <Plus size={16} /> },
         { name: "Logout", path: "/logout" },
     ];
 
