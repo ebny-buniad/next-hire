@@ -5,7 +5,7 @@
 @theme {
   --font-display: "Poppins", sans-serif;
   --color-primary: #00A7F3;
-  --font-size: 14px
+  --font-size: 13px
 }
 
 @layer base {
