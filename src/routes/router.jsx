@@ -16,6 +16,8 @@ import CompanyProfile from "../pages/Dashboard/Employer/CompanyProfile";
 import CreateCompanyProfile from "../pages/Dashboard/Employer/CreateCompanyProfile";
 import UpdateCompanyProfile from "../pages/Dashboard/Employer/UpdateCompanyProfile";
 import PostJob from "../pages/Dashboard/Employer/PostJob";
+import JobDetails from "../pages/FindJobs/JobDetails";
+import ViewCompanyProfile from "../pages/FindJobs/ViewCompanyProfile";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
             {
                 path: 'find-jobs',
                 element: <PrivateRouter><FindJobs></FindJobs></PrivateRouter>
+            },
+            {
+                path: 'job-details/:id',
+                element: <PrivateRouter><JobDetails></JobDetails></PrivateRouter>
+            },
+            {
+                path: 'view-company-profile/:company_Name',
+                element: <PrivateRouter><ViewCompanyProfile></ViewCompanyProfile></PrivateRouter>
             },
             {
                 path: 'profile',

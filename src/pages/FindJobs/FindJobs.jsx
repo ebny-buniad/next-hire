@@ -5,9 +5,11 @@ import { ArrowRight, Bookmark, BookmarkCheck, Building2, Calendar, Clock, Contac
 import JobFilters from './JobFilters';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
 
 const FindJobs = () => {
     const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
     const { register, handleSubmit, reset, watch } = useForm();
     const searchValue = watch("search");
     const locationValue = watch("location");
@@ -20,19 +22,15 @@ const FindJobs = () => {
         }
     })
 
-    console.log(jobs)
-
-    console.log(searchValue)
-
     const submitHandler = (data) => {
         console.log(data)
         // data = { search: "developer", location: "Dhaka" }
         // parent কে এই 
     };
 
-
-
-
+    const handelSeeDetails = (id) => {
+        navigate(`/job-details/${id}`)
+    }
 
 
     return (
@@ -86,7 +84,7 @@ const FindJobs = () => {
                         <div className='grid md:grid-cols-2 gap-3'>
                             {
                                 jobs.map((job) => {
-                                    return <div className='border border-gray-200 rounded-2xl p-3 hover:shadow-md cursor-pointer transform transition-all'>
+                                    return <div key={job._id} className='border border-gray-200 rounded-2xl p-3 hover:shadow-md cursor-pointer transform transition-all'>
                                         <div className='flex items-center justify-between'>
                                             <div className='flex items-center gap-2'>
                                                 <div className='p-1 w-18 h-18 flex items-center justify-center shadow-md rounded-2xl'>
@@ -102,10 +100,9 @@ const FindJobs = () => {
 
                                         <div className='my-5 flex flex-wrap gap-3'>
                                             <p className='inline-block bg-gray-100 py-2 px-3 text-sm rounded-full'><span className='flex gap-2 items-center'><MapPin size={17} />{job.location}</span></p>
-                                            <p className='inline-block bg-green-100 py-2 px-3 text-sm rounded-full'><span className='flex gap-2 items-center'><Clock size={17} />{job.jobType}</span></p>
+                                            <p className='inline-block bg-orange-100 py-2 px-3 text-sm rounded-full'><span className='flex gap-2 items-center'><Clock size={17} />{job.jobType}</span></p>
                                             <p className='inline-block bg-gray-100 py-2 px-3 text-sm rounded-full'><span className='flex gap-2 items-center'><Users size={17} />{job.vacancy}</span></p>
                                         </div>
-
                                         <div className='flex items-center justify-between  py-3  text-gray-500'>
                                             <p className='flex items-center gap-2'><Calendar className='text-green-500' size={16} />{new Date(job.post_date).toLocaleDateString()}</p>
                                             <p className='flex items-center gap-2'><Calendar className='text-red-500' size={16} />{new Date(job.deadline).toLocaleDateString()}</p>
@@ -117,7 +114,7 @@ const FindJobs = () => {
 
                                         <div className='flex items-center justify-between mt-5'>
                                             <p className='capitalize bg-green-100 border border-green-500 rounded-full px-5 py-2 text-sm'>{job.status}</p>
-                                            <button className='btn bg-blue-600 text-white font-normal 
+                                            <button onClick={() => handelSeeDetails(job._id)} className='btn bg-blue-600 text-white font-normal 
                                            border-0 rounded-lg py-6'>Details <ArrowRight size={15} /></button>
                                         </div>
                                     </div>

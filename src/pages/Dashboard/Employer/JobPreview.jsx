@@ -41,7 +41,7 @@ const JobPreview = ({ data, onEdit, onPost }) => {
 
                 <div className='h-20 w-20 p-2 rounded-2xl shadow flex items-center justify-center'>
                     {
-                        logo?.logo ? <img className='object-cover rounded-2xl' src={logo.logo} alt="" /> : <Building2 className='text-blue-600' size={40} />
+                        logo?.logo ? <img className='object-cover rounded-2xl' src={logo?.logo} alt="" /> : <Building2 className='text-blue-600' size={40} />
                     }
                 </div>
             </div>

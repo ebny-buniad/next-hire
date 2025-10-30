@@ -1,19 +1,35 @@
-import Container from '../../../components/Container/Container';
+import React from 'react';
+import { Link, useParams } from 'react-router';
+import useAuth from '../../hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Container from '../../components/Container/Container';
 import { Building2, Calendar, Globe, MapPin, Phone, Users } from 'lucide-react';
 import { FaXTwitter, FaFacebookF, FaLinkedinIn, FaTiktok, FaInstagram } from "react-icons/fa6";
-import { Link } from 'react-router';
+import Loading from '../../components/Loading/Loading';
 
-const CompanyInfo = ({ companyInfo }) => {
+const ViewCompanyProfile = () => {
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const { company_Name } = useParams();
+    const { data: companyInfo = {}, isPending } = useQuery({
+        queryKey: ['view-company-details', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure(`/api/company?companyName=${company_Name}`);
+            return res.data.data;
+        }
+    })
 
-    if (!companyInfo) {
-        return <div>No company information available</div>;
+    if(isPending){
+        return <Loading></Loading>
     }
+
     const { companyName, logo, banner, about, website, socialLinks, size, industry, founded, address, phone } = companyInfo || {};
 
     return (
-        <div>
+        <div className='pt-22'>
             <Container>
-                <div className='shadow-md p-5 pb-15 mt-5 rounded-xl'>
+                <div className='shadow-md p-5 pb-15 mb-10 rounded-xl'>
                     <div className="relative w-full h-68">
                         <img
                             src={banner}
@@ -94,4 +110,4 @@ const CompanyInfo = ({ companyInfo }) => {
     );
 };
 
-export default CompanyInfo;
+export default ViewCompanyProfile;
