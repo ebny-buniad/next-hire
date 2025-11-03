@@ -1,12 +1,59 @@
-# React + Vite
+# 🚀 NextHire - MERN Stack Job Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**NextHire** is a modern, full-featured job portal built using the **MERN Stack** (MongoDB, Express.js, React.js, Node.js).  
+It connects **Job Seekers** and **Employers** — allowing candidates to find and apply for jobs easily, while companies can post and manage their listings efficiently.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Features
 
-## Expanding the ESLint configuration
+### 👩‍💼 For Job Seekers
+- 🔍 Search jobs by **title**, **company**, **keywords**, or **location**
+- 🎯 Advanced filters — Job Type (Full-time, Part-time, Remote), Category, Salary Range
+- 📝 View detailed job descriptions
+- 💼 Apply directly to jobs
+- ❤️ Save favorite jobs
+- ⚙️ Manage profile and settings (update info, reset password, delete account)
+- 🔔 View application status and notifications
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🏢 For Employers
+- 🧾 Post new job listings with detailed information (title, category, salary, type, description)
+- ✏️ Edit or delete posted jobs
+- 👀 View all applicants and filter candidates
+- 📊 Dashboard with job post statistics
+- ⚙️ Company profile management (update info, verify account)
+- 🧰 Billing & Subscription (Free / Premium Plans)
+
+---
+
+## 🧠 Extra Features
+- 🔐 Authentication with JWT (Login / Register)
+- ✉️ Email verification & password reset
+- 🧭 Pagination for job listings
+- 💬 Role-based access (Job Seeker / Employer)
+- 📱 Responsive UI with Tailwind CSS & DaisyUI
+- ⚡ Debounced search & optimized API performance
+
+---
+
+## 🧩 Tech Stack
+
+**Frontend:**
+- React.js  
+- React Hook Form  
+- React Router DOM  
+- Tailwind CSS + DaisyUI  
+- Axios  
+
+**Backend:**
+- Node.js  
+- Express.js  
+- MongoDB (Mongoose / Native Driver)  
+- JWT Authentication  
+- Bcrypt.js for password hashing  
+- Dotenv for environment configuration  
+
+---
+
+## 🗂️ Folder Structure
+
