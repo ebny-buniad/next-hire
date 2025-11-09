@@ -91,7 +91,6 @@ const PostJob = () => {
                                                 <option>Project Manager</option>
                                                 <option>Mobile App Developer</option>
                                                 <option>DevOps Engineer</option>
-                                                <option>QA Engineer / Tester</option>
                                                 <option>Data Analyst</option>
                                                 <option>Software Engineer</option>
                                                 <option>Cybersecurity Specialist</option>
