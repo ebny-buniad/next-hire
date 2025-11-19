@@ -1,6 +1,7 @@
 import { Building2, MoveRight, Search, TrendingUp, Users } from 'lucide-react';
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router';
 
 const heroStats = [
     { icon: Users, lable: 'Active User', value: '2.4M+' },
@@ -39,11 +40,10 @@ const Hero = () => {
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
-                    className='flex justify-center gap-5 mt-20'
-                >
-                    <button className='flex items-center gap-2 btn bg-gradient-to-r from-blue-500 to-purple-500 text-white h-13 px-7 rounded-xl'>
+                    className='flex justify-center gap-5 mt-20'>
+                    <Link to='/find-jobs' className='flex items-center gap-2 btn bg-gradient-to-r from-blue-500 to-purple-500 text-white h-13 px-7 rounded-xl'>
                         <Search size={18} /> Find Jobs <MoveRight size={18} />
-                    </button>
+                    </Link>
                     <button className='btn h-13 px-7 rounded-xl'>Post a Job</button>
                 </motion.div>
 

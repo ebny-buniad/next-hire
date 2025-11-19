@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const JobFilters = ({ onFilterChange }) => {
-    const { register, watch, reset, setValue } = useForm({
+    const {  watch, reset, setValue } = useForm({
         defaultValues: {
             jobType: "",
             category: [],
@@ -36,16 +36,14 @@ const JobFilters = ({ onFilterChange }) => {
         });
     };
 
-    // 🔹 Handle single jobType checkbox (one active at a time)
     const handleJobTypeSelect = (value) => {
         if (values.jobType === value) {
-            setValue("jobType", ""); // Uncheck
+            setValue("jobType", "");
         } else {
             setValue("jobType", value);
         }
     };
 
-    // 🔹 Handle multiple categories correctly
     const handleCategorySelect = (value) => {
         const current = values.category || [];
         if (current.includes(value)) {

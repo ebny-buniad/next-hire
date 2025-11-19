@@ -5,9 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate, useParams } from 'react-router';
 import Loading from '../../components/Loading/Loading';
-import { ArrowLeft, Building, Building2, Clock3, MapPin, Send, Sparkle, Users } from 'lucide-react';
-import { Bookmark, Share2, Check, DollarSign, Briefcase, Calendar, FileText, Heart, Home, Award, GraduationCap, Clock, MonitorCheck } from 'lucide-react';
-import ViewCompanyProfile from './ViewCompanyProfile';
+import { ArrowLeft, Building, Building2, MapPin, Send, Sparkle, Users } from 'lucide-react';
+import { Bookmark, Share2, Check, Calendar, Clock, MonitorCheck } from 'lucide-react';
+
 
 const JobDetails = () => {
     const { user } = useAuth();
@@ -30,7 +30,6 @@ const JobDetails = () => {
     }
 
     const hanelViewCompanyProfile = (companyName) => {
-        console.log(companyName)
         navigate(`/view-company-profile/${companyName}`)
     }
 

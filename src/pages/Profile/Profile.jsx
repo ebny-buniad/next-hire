@@ -6,13 +6,11 @@ import useAxiosSecure from '../../hooks/useAxiosSecure'
 import Loading from '../../components/Loading/Loading';
 import { useForm } from 'react-hook-form';
 import { Camera, FileUser } from 'lucide-react';
-import { FileUploaderRegular } from '@uploadcare/react-uploader';
-import '@uploadcare/react-uploader/core.css';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
 const Profile = () => {
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [selectedImage, setSelectedImage] = useState(null);
@@ -39,7 +37,7 @@ const Profile = () => {
     }
 
     const { name, email, role, photoURL } = AC_details;
-    const { phone, country, address, education, experience, linkedin, skills } = profile_Details || {};
+    const { phone, country, address, education, experience, linkedin, resume, skills } = profile_Details || {};
 
     const onSubmit = async (data) => {
         const profileInfo = { ...data, email, role };
@@ -47,8 +45,8 @@ const Profile = () => {
         if (profile_Details) {
             try {
                 const res = await axiosSecure.put(`/api/profiles?email=${user?.email}`, profileInfo);
-                if (res.data.modifiedCount === 1) {
-                    toast.success("Update successful");
+                if (res.data.data.modifiedCount === 1) {
+                    toast.success("Info updated");
                 }
             }
             catch (error) {
@@ -60,7 +58,7 @@ const Profile = () => {
             try {
                 const res = await axiosSecure.post('/api/profiles', profileInfo);
                 if (res.data?.result?.insertedId) {
-                    toast.success("Created successful");
+                    toast.success("Profile created");
                 }
             } catch (error) {
                 if (error.response?.status === 409) {
@@ -162,8 +160,8 @@ const Profile = () => {
                         </div>
 
                         <div>
-                            {user.emailVerified === false ? <p className='bg-red-100 py-1 text-xs px-3 rounded-full text-red-600'>Account unverified</p> : 
-                            <p className='bg-green-100 py-1 text-xs px-3 rounded-full text-green-600'>Account verified</p>}
+                            {user.emailVerified === false ? <p className='bg-red-100 py-1 text-xs px-3 rounded-full text-red-600'>Account unverified</p> :
+                                <p className='bg-green-100 py-1 text-xs px-3 rounded-full text-green-600'>Account verified</p>}
                         </div>
 
                     </div>
@@ -281,18 +279,20 @@ const Profile = () => {
                             {/* Resume Drive Link */}
 
                             <div>
-                                <label className="block font-medium">Upload Resume</label>
-                                <FileUploaderRegular
-                                    sourceList='local'
-                                    classNameUploader='uc-light'
-                                    pubkey="b57373d6cff3b596af10"
-                                    onFileUploadSuccess={(fileInfo) => {
-                                        setValue('resume', fileInfo.cdnUrl)
-                                    }}
-                                    checkForUrlDuplicates={true}
-                                    multiple={false}
-                                >
-                                </FileUploaderRegular>
+                                <label className="block font-medium">Upload Resume (Drive Link)</label>
+                                <input
+                                    defaultValue={resume}
+                                    type="url"
+                                    {...register("resume", {
+                                        required: "Resume google drive link is required",
+                                        pattern: {
+                                            value: /^https?:\/\/.+$/,
+                                            message: "Enter a valid URL",
+                                        },
+                                    })}
+                                    className="input input-bordered w-full border-0 bg-gray-100 py-6"
+                                />
+                                {errors.resume && <p className="text-red-500 text-sm">{errors.resume.message}</p>}
                             </div>
 
                             {/* Gender */}
@@ -323,7 +323,7 @@ const Profile = () => {
 
                             {/* Submit Button */}
                             <div className="md:col-span-2">
-                                <button type="submit" className="btn text-white py-5 bg-gradient-to-r from-blue-500 to-purple-500">
+                                <button type="submit" className="btn text-white py-6 px-10 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500">
                                     {profile_Details ? 'Update Info' : 'Submit Info'}
                                 </button>
                             </div>

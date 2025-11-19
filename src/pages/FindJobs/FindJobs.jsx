@@ -11,9 +11,8 @@ const FindJobs = () => {
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     const { register, watch } = useForm();
-
     const [filters, setFilters] = useState({});
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const searchValue = watch("search");
     const locationValue = watch("location");
@@ -34,6 +33,7 @@ const FindJobs = () => {
         queryFn: async () => {
             const params = getJobsParams();
             const res = await axiosSecure.get("/api/jobs", { params });
+            setLoading(false)
             return res.data.data || [];
         }
     });
@@ -91,6 +91,7 @@ const FindJobs = () => {
                     </div>
 
                     <div className='col-span-6'>
+                        <h3 className='text-xl font-semibold text-gray-600 pb-5'>Available jobs {jobs.length}</h3>
                         {loading ? (
                             <p className="text-center text-gray-500">Loading jobs...</p>
                         ) : jobs.length === 0 ? (
