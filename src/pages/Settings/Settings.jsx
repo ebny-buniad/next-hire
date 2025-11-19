@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../../components/Container/Container';
 import { Brain } from 'lucide-react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
@@ -6,9 +6,23 @@ import 'react-tabs/style/react-tabs.css';
 import AccountTab from './AccountTab/AccountTab';
 import BillingsTab from './BillingsTab/BillingsTab';
 import PlansTab from './PlansTab/PlansTab';
+import { useLocation } from 'react-router';
 
 const Settings = () => {
     const [tabIndex, setTabIndex] = useState(0);
+    const location = useLocation();
+    useEffect(() => {
+        const tab = location.state.tab;
+        if (tab === "plans") {
+            setTabIndex(2);
+        }
+        else if (tab === "billings") {
+            setTabIndex(1);
+        }
+        else {
+            setTabIndex(0);
+        }
+    }, [location.state.tab]);
     return (
         <div className='py-15 text-gray-600'>
             <Container>

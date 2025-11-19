@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '../../components/Container/Container';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../hooks/useAuth';
-import { useNavigate, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import Loading from '../../components/Loading/Loading';
 import { ArrowLeft, Building, Building2, MapPin, Send, Sparkle, Users } from 'lucide-react';
 import { Bookmark, Share2, Check, Calendar, Clock, MonitorCheck } from 'lucide-react';
-
+import toast from 'react-hot-toast';
+import useUserPlan from '../../hooks/useUserPlan';
+import Logo from '../../components/Logo/Logo';
+import {
+    Mail, User, Star, Heart, Bell, Shield, Cloud, Lock,
+    MessageCircle, BriefcaseBusiness, BadgeCheck, Headset, Download,
+    BicepsFlexed,
+    DollarSign,
+    ChevronsRight,
+} from 'lucide-react';
 
 const JobDetails = () => {
+    const iconMap = {
+        Check, Mail, User, Star, Heart, Bell, Shield, Cloud, Lock, MessageCircle, BriefcaseBusiness, BadgeCheck, Headset, Download, BicepsFlexed, DollarSign,
+    };
+    const [openModal, setOpenModal] = useState(false);
     const { user } = useAuth();
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
+    const { plans } = useUserPlan();
+    const plan = plans[plans.length - 1]
     const { id } = useParams();
     const { data: jobDetails = {}, isPending } = useQuery({
         queryKey: ['job-details', user?.email],
@@ -22,7 +37,7 @@ const JobDetails = () => {
         }
     })
 
-    const { jobTitle, jobType, location, post_date, requirements, salaryMin, salaryMax, status, vacancy,
+    const { _id, jobTitle, jobType, location, post_date, requirements, salaryMin, salaryMax, status, vacancy,
         workDays, jobLevel, description, deadline, companyInfo, benefits } = jobDetails;
 
     if (isPending) {
@@ -31,6 +46,36 @@ const JobDetails = () => {
 
     const hanelViewCompanyProfile = (companyName) => {
         navigate(`/view-company-profile/${companyName}`)
+    }
+
+    const jobApplyInfo = {
+        jobId: _id,
+        email: user?.email,
+        jobTitle,
+        companyInfo,
+        appliedAt: new Date().toISOString(),
+        jobLevel,
+        deadline,
+        status: 'pending'
+    }
+    const handelApplyJob = async () => {
+        try {
+            const res = await axiosSecure.post('/api/applications', jobApplyInfo);
+            if (res.data.application.insertedId) {
+                toast.success('Application Successful');
+            }
+        }
+        catch (error) {
+            if (error.response?.status === 409) {
+                toast.error("Already applied");
+            }
+            else if (error.response?.status === 400) {
+                toast.error("Employer can't apply!");
+            }
+            else {
+                setOpenModal(true);
+            }
+        }
     }
 
     return (
@@ -149,7 +194,7 @@ const JobDetails = () => {
                     <div className="lg:col-span-1 space-y-6 mt-8 lg:mt-0">
                         <div className="card p-6 border border-gray-200">
                             <div className='mb-6 flex gap-5 justify-between'>
-                                <button className="btn w-90 py-7 bg-blue-600 text-white rounded-lg text-lg border-0">
+                                <button onClick={() => handelApplyJob()} className="btn w-90 py-7 bg-blue-600 text-white rounded-lg text-lg border-0">
                                     <Send className="w-5 h-5" />
                                     Apply Now
                                 </button>
@@ -221,6 +266,57 @@ const JobDetails = () => {
 
                     </div>
                 </div>
+
+
+
+
+
+
+                {/* PLAN UPGRADE MODAL */}
+                {openModal && (
+                    <dialog open className="modal">
+                        <div className="modal-box lg:w-5xl max-w-5xl bg-gradient-to-r from-blue-100 to-violet-50">
+                            <button onClick={() => setOpenModal(false)} className="btn btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
+                            <div className='flex flex-col items-center mb-15 mt-5 space-y-5'>
+                                <Logo className="mx-auto"></Logo>
+                                <p className='text-red-400'>Already you hit the free plan!</p>
+                                <p className='text-2xl'>Unlock advanced Capabilities</p>
+                            </div>
+
+
+                            <div className='grid items-center md:grid-cols-2 gap-10'>
+                                <div>
+                                    <img className='rounded-xl w-full' src="https://leodesignking.com/wp-content/uploads/2024/07/social-media-marketing-1.jpg" alt="" />
+                                </div>
+                                <div key={plan._id}>
+                                    <h3 className='font-semibold text-2xl text-violet-500'>{plan.name}</h3>
+                                    <h1 className='text-4xl flex mt-5 mb-2'><DollarSign size={15} />{plan.price}</h1>
+                                    <p>Per Month</p>
+                                    <div className='mt-4 space-y-4'>
+                                        {plan.features.map((feature, index) => {
+                                            const IconComponent = iconMap[feature.icon];
+                                            return (
+                                                <p key={index} className="flex items-center gap-2">
+                                                    {IconComponent && <IconComponent size={16} />}
+                                                    {feature.text}
+                                                </p>
+                                            );
+                                        })}
+                                    </div>
+                                    <button onClick={() => handelGetPlan(plan._id)}
+                                        disabled={plan.price === '0'}
+                                        className='btn mt-8 border-0 text-white w-full py-6 rounded-full
+                         bg-gradient-to-r from-blue-500 to-purple-500 font-normal'
+                                    >{plan.price === "0" ? 'Your current plan' : <>Get Plan <ChevronsRight size={17} /></>}</button>
+                                    <div className="divider">OR</div>
+                                    <Link state={{ tab: "plans" }} to="/settings"
+                                        className='btn w-full rounded-full mt-1 bg-blue-600 text-white border-0 font-normal py-6 px-10'>See all Plans</Link>
+                                </div>
+                            </div>
+                        </div>
+                    </dialog>
+                )}
+
             </Container>
         </div>
     );

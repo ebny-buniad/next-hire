@@ -5,49 +5,15 @@ import {
     DollarSign,
     ChevronsRight,
 } from 'lucide-react';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
-import useAuth from '../../../hooks/useAuth';
 import Loading from '../../../components/Loading/Loading';
+import useUserPlan from '../../../hooks/useUserPlan';
 const PlansTab = () => {
-    const { user } = useAuth();
-    const axiosSecure = useAxiosSecure();
     const iconMap = {
         Check, Mail, User, Star, Heart, Bell, Shield, Cloud, Lock, MessageCircle, BriefcaseBusiness, BadgeCheck, Headset, Download, BicepsFlexed, DollarSign,
     };
+    const { plans, loading } = useUserPlan();
 
-    // Load user data for get role
-    const { data: userDetails = {}, isPending } = useQuery({
-        queryKey: ['userACdetails', user?.email],
-        queryFn: async () => {
-            try {
-                const res = await axiosSecure.get(`/api/users?email=${user?.email}`);
-                return res.data;
-            }
-            catch (error) {
-                console.log(error);
-            }
-
-        },
-        enabled: !!user?.email,
-    });
-
-    // Load subscription plan by user role
-    const { data: plans = [] } = useQuery({
-        queryKey: ['plans', userDetails?.email],
-        queryFn: async () => {
-            try {
-                const res = await axiosSecure.get(`/api/plans/${userDetails?.role}`);
-                return res.data.data;
-            }
-            catch (error) {
-                console.log(error);
-            }
-        },
-        enabled: !!userDetails?.role,
-    })
-
-    if (isPending) {
+    if (loading) {
         return <Loading></Loading>
     }
 
