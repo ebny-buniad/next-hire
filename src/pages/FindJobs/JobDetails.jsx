@@ -82,28 +82,28 @@ const JobDetails = () => {
         <div className='pt-22 text-gray-700'>
             <Container>
 
-                <div className='flex items-center gap-5 mb-10 mt-5'>
-                    <button onClick={() => navigate(-1)} className='cursor-pointer'><ArrowLeft /></button>
-                    <div>
-                        <h3 className='text-3xl font-semibold pb-2'>{jobTitle}</h3>
+                <div className='md:flex items-center gap-5 mb-10 md:mt-5'>
+                    <button onClick={() => navigate(-1)} className='cursor-pointer mb-5 md:mb-0'><ArrowLeft /></button>
+                    <div className='space-y-3'>
+                        <h3 className='text-3xl font-semibold'>{jobTitle}</h3>
                         <p>{companyInfo[0].companyName} • {location}</p>
                     </div>
                 </div>
 
-                <div className="lg:grid lg:grid-cols-3 lg:gap-8 mt-8 mb-15">
+                <div className="grid lg:grid-cols-3 gap-8 mb-15">
 
-                    <div className="lg:col-span-2 space-y-8">
+                    <div className="lg:col-span-2 space-y-4">
                         {/* Job Header Card */}
-                        <div className="card  p-6 border border-gray-200">
-                            <div className="flex items-start justify-between">
+                        <div className="card p-3 md:p-6 border border-gray-200">
+                            <div className="relative">
                                 <div className="md:flex items-start space-x-4">
                                     {/* Company Logo */}
-                                    <div className='h-20 w-20 p-2 rounded-2xl shadow flex items-center justify-center'>
+                                    <div className='h-16 w-16 p-1 mb-3 rounded-2xl shadow flex items-center justify-center'>
                                         <img className='object-cover rounded-2xl' src={companyInfo[0]?.logo ? companyInfo[0]?.logo : <Building2 className='text-blue-600' size={40} />} alt="" />
                                     </div>
-                                    {/* Title and Metadata */}
-                                    <div>
-                                        <h1 className="text-3xl font-bold text-gray-900 leading-snug">{jobTitle}</h1>
+                                    {/* Title */}
+                                    <div className='space-y-3'>
+                                        <h1 className="text-2xl font-bold text-gray-700">{jobTitle}</h1>
                                         <p className="text-gray-600 flex items-center mt-1">
                                             <span className="font-semibold text-blue-600">{companyInfo[0].companyName}</span>
                                             <MapPin className="w-4 h-4 ml-3 mr-1 text-gray-400" />
@@ -122,7 +122,7 @@ const JobDetails = () => {
                                 </div>
 
                                 {/* Actions (Bookmark/Share) */}
-                                <div className="flex space-x-3">
+                                <div className="flex space-x-3 absolute top-0 right-0">
                                     <button className="btn btn-ghost btn-circle text-gray-500 hover:text-blue-600">
                                         <Bookmark className="w-5 h-5" />
                                     </button>
@@ -134,29 +134,29 @@ const JobDetails = () => {
 
                             {/* Stats Card Row */}
                             <div className="mt-6 flex flex-wrap gap-4 justify-between border-t border-gray-200 pt-4">
-                                <div className="flex flex-col items-center p-3 w-1/3 min-w-[120px] max-w-[200px]">
-                                    <p className="text-2xl font-bold text-gray-900">$ {salaryMin}–{salaryMax}</p>
+                                <div className="flex flex-col items-center p-3">
+                                    <p className="text-2xl font-semibold text-gray-600">$ {salaryMin}–{salaryMax}</p>
                                     <p className="text-sm text-gray-500">Monthly Salary</p>
                                 </div>
-                                <div className="flex flex-col items-center p-3 w-1/3 min-w-[120px] max-w-[200px]">
-                                    <p className="text-2xl font-bold text-gray-900">{vacancy}</p>
+                                <div className="flex flex-col items-center p-3">
+                                    <p className="text-2xl font-semibold text-gray-600">{vacancy}</p>
                                     <p className="text-sm text-gray-500">Vacancies</p>
                                 </div>
-                                <div className="flex flex-col items-center p-3 w-1/3 min-w-[120px] max-w-[200px]">
-                                    <p className="text-2xl font-bold text-gray-900 capitalize">{jobType}</p>
+                                <div className="flex flex-col items-center p-3">
+                                    <p className="text-2xl font-semibold text-gray-600 capitalize">{jobType}</p>
                                     <p className="text-sm text-gray-500">Job Type</p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Job Description */}
-                        <div className="card p-6 border border-gray-200">
+                        <div className="card p-3 md:p-6 border border-gray-200">
                             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Job Description</h2>
                             <p className="text-gray-600 leading-relaxed">{description}</p>
                         </div>
 
                         {/* Requirements */}
-                        <div className="card p-6 border border-gray-200">
+                        <div className="card p-3 md:p-6 border border-gray-200">
                             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Requirements</h2>
                             <ul className="space-y-3">
                                 {requirements?.split("\n")
@@ -172,7 +172,7 @@ const JobDetails = () => {
                         </div>
 
                         {/* Benefits & Perks */}
-                        <div className="card p-6 border border-gray-200">
+                        <div className="card p-3 md:p-6 border border-gray-200">
                             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Benefits & Perks</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6 text-gray-600">
                                 <ul className='space-y-3'>
@@ -191,8 +191,8 @@ const JobDetails = () => {
                         </div>
                     </div>
 
-                    <div className="lg:col-span-1 space-y-6 mt-8 lg:mt-0">
-                        <div className="card p-6 border border-gray-200">
+                    <div className="lg:col-span-1 space-y-6">
+                        <div className="card p-3 md:p-6 border border-gray-200 md:sticky md:top-20">
                             <div className='mb-6 flex gap-5 justify-between'>
                                 <button onClick={() => handelApplyJob()} className="btn w-90 py-7 bg-blue-600 text-white rounded-lg text-lg border-0">
                                     <Send className="w-5 h-5" />
@@ -248,22 +248,6 @@ const JobDetails = () => {
                                 </button>
                             </div>
                         </div>
-
-
-                        {/* Job Alert Card */}
-                        <div className="card bg-white shadow-xl p-6 border border-gray-100 text-center">
-                            <div className="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                                <Users className="w-6 h-6 text-blue-600" />
-                            </div>
-                            <h3 className="text-xl font-semibold text-gray-800">Job Alert</h3>
-                            <p className="text-sm text-gray-500 mt-1 mb-4">
-                                Get notified when similar jobs are posted
-                            </p>
-                            <button className="btn btn-outline btn-block border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">
-                                Create Alert
-                            </button>
-                        </div>
-
                     </div>
                 </div>
 

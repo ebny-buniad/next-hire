@@ -12,7 +12,7 @@ const Settings = () => {
     const [tabIndex, setTabIndex] = useState(0);
     const location = useLocation();
     useEffect(() => {
-        const tab = location.state.tab;
+        const tab = location?.state?.tab;
         if (tab === "plans") {
             setTabIndex(2);
         }
@@ -22,7 +22,7 @@ const Settings = () => {
         else {
             setTabIndex(0);
         }
-    }, [location.state.tab]);
+    }, [location]);
     return (
         <div className='py-15 text-gray-600'>
             <Container>
