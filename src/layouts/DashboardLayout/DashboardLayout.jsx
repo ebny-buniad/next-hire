@@ -12,6 +12,7 @@ const DashboardLayout = () => {
         { name: "My Plans", path: "/dashboard/my-plans", icon: <HandCoins size={16} /> },
         { name: "Company profile", path: "/dashboard/company-profile", icon: <Building2 size={16} /> },
         { name: "Post Job", path: "/dashboard/post-job", icon: <Plus size={16} /> },
+        { name: "My Applications (Jobseeker)", path: "/dashboard/my-applications", icon: <Plus size={16} /> },
         { name: "Logout", path: "/logout" },
     ];
 
@@ -19,7 +20,7 @@ const DashboardLayout = () => {
         <div className="flex h-screen">
             {/* Sidebar */}
             <div
-                className={`fixed lg:static z-40 top-0 left-0 h-full w-64 bg-white shadow-md transform transition-transform duration-300 
+                className={`fixed lg:static z-40 top-0 left-0 h-full w-96 bg-white shadow-md transform transition-transform duration-300 
           ${isOpen ? "translate-x-0" : "-translate-x-full"} 
           lg:translate-x-0`}
             >

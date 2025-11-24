@@ -18,6 +18,7 @@ import UpdateCompanyProfile from "../pages/Dashboard/Employer/UpdateCompanyProfi
 import PostJob from "../pages/Dashboard/Employer/PostJob";
 import JobDetails from "../pages/FindJobs/JobDetails";
 import ViewCompanyProfile from "../pages/FindJobs/ViewCompanyProfile";
+import MyApplications from "../pages/Dashboard/Jobseeker/MyApplications";
 
 const router = createBrowserRouter([
     {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
             {
                 path: 'post-job',
                 Component: PostJob
+            },
+            {
+                path: 'my-applications',
+                Component: MyApplications
             }
         ]
     }

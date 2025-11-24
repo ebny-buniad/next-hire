@@ -35,7 +35,7 @@ const JobDetails = () => {
             const res = await axiosSecure.get(`/api/jobs/${id}`);
             return res.data.data;
         }
-    })
+    });
 
     const { _id, jobTitle, jobType, location, post_date, requirements, salaryMin, salaryMax, status, vacancy,
         workDays, jobLevel, description, deadline, companyInfo, benefits } = jobDetails;
@@ -66,11 +66,17 @@ const JobDetails = () => {
             }
         }
         catch (error) {
-            if (error.response?.status === 409) {
-                toast.error("Already applied");
+            const status = error.response?.status;
+            console.log(status)
+
+            if (status === 400) {
+                toast.error("Please create your profile first!");
             }
-            else if (error.response?.status === 400) {
-                toast.error("Employer can't apply!");
+            else if (status === 409) {
+                toast.error("You already applied to this job");
+            }
+            else if (status === 403) {
+                toast.error("Employers cannot apply!");
             }
             else {
                 setOpenModal(true);
@@ -123,9 +129,6 @@ const JobDetails = () => {
 
                                 {/* Actions (Bookmark/Share) */}
                                 <div className="flex space-x-3 absolute top-0 right-0">
-                                    <button className="btn btn-ghost btn-circle text-gray-500 hover:text-blue-600">
-                                        <Bookmark className="w-5 h-5" />
-                                    </button>
                                     <button className="btn btn-ghost btn-circle text-gray-500 hover:text-blue-600">
                                         <Share2 className="w-5 h-5" />
                                     </button>
@@ -194,7 +197,7 @@ const JobDetails = () => {
                     <div className="lg:col-span-1 space-y-6">
                         <div className="card p-3 md:p-6 border border-gray-200 md:sticky md:top-20">
                             <div className='mb-6 flex gap-5 justify-between'>
-                                <button onClick={() => handelApplyJob()} className="btn w-90 py-7 bg-blue-600 text-white rounded-lg text-lg border-0">
+                                <button onClick={() => handelApplyJob()} className="btn flex-1 py-7 bg-blue-600 text-white rounded-lg text-lg border-0">
                                     <Send className="w-5 h-5" />
                                     Apply Now
                                 </button>
@@ -261,16 +264,16 @@ const JobDetails = () => {
                     <dialog open className="modal">
                         <div className="modal-box lg:w-5xl max-w-5xl bg-gradient-to-r from-blue-100 to-violet-50">
                             <button onClick={() => setOpenModal(false)} className="btn btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
-                            <div className='flex flex-col items-center mb-15 mt-5 space-y-5'>
+                            <div className='flex flex-col items-center mb-10 mt- space-y-3'>
                                 <Logo className="mx-auto"></Logo>
                                 <p className='text-red-400'>Already you hit the free plan!</p>
                                 <p className='text-2xl'>Unlock advanced Capabilities</p>
                             </div>
 
 
-                            <div className='grid items-center md:grid-cols-2 gap-10'>
+                            <div className='grid items-center md:grid-cols-2 gap-5'>
                                 <div>
-                                    <img className='rounded-xl w-full' src="https://leodesignking.com/wp-content/uploads/2024/07/social-media-marketing-1.jpg" alt="" />
+                                    <img className='rounded-xl w-full hidden md:block' src="https://leodesignking.com/wp-content/uploads/2024/07/social-media-marketing-1.jpg" alt="" />
                                 </div>
                                 <div key={plan._id}>
                                     <h3 className='font-semibold text-2xl text-violet-500'>{plan.name}</h3>
