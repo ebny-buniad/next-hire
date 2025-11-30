@@ -28,9 +28,6 @@ const MyApplications = ({ onFilter }) => {
         return <Loading></Loading>
     }
 
-    console.log(myApplications)
-
-
     return (
         <div>
             <h3 className='text-2xl font-bold my-5 text-gray-600'>My applications</h3>
@@ -108,7 +105,7 @@ const MyApplications = ({ onFilter }) => {
 
                         {
                             myApplications.map((application, idx) => {
-                                const { _id, jobTitle, companyInfo, appliedAt, jobLevel, status } = application;
+                                const { _id, jobTitle, companyInfo, appliedAt, jobLevel, applicationStatus } = application;
                                 return (
                                     <tr key={_id}>
                                         <td>{idx + 1}</td>
@@ -131,7 +128,7 @@ const MyApplications = ({ onFilter }) => {
                                             {new Date(appliedAt).toLocaleString()}
                                         </td>
                                         <td>{jobLevel} Level</td>
-                                        <td className='uppercase'>{status}</td>
+                                        <td className='uppercase'>{applicationStatus}</td>
                                     </tr>
                                 )
                             })

@@ -19,6 +19,7 @@ import PostJob from "../pages/Dashboard/Employer/PostJob";
 import JobDetails from "../pages/FindJobs/JobDetails";
 import ViewCompanyProfile from "../pages/FindJobs/ViewCompanyProfile";
 import MyApplications from "../pages/Dashboard/Jobseeker/MyApplications";
+import ManageJobs from "../pages/Dashboard/Employer/ManageJobs";
 
 const router = createBrowserRouter([
     {
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
             {
                 path: 'my-applications',
                 Component: MyApplications
+            }, 
+            {
+                path: 'manage-jobs',
+                Component: ManageJobs
             }
         ]
     }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Outlet } from "react-router";
-import { Building2, HandCoins, Menu, Plus, X } from "lucide-react";
+import { Briefcase, Building2, HandCoins, Menu, Newspaper, Plus, X } from "lucide-react";
 import Logo from "../../components/Logo/Logo";
 
 const DashboardLayout = () => {
@@ -12,7 +12,8 @@ const DashboardLayout = () => {
         { name: "My Plans", path: "/dashboard/my-plans", icon: <HandCoins size={16} /> },
         { name: "Company profile", path: "/dashboard/company-profile", icon: <Building2 size={16} /> },
         { name: "Post Job", path: "/dashboard/post-job", icon: <Plus size={16} /> },
-        { name: "My Applications (Jobseeker)", path: "/dashboard/my-applications", icon: <Plus size={16} /> },
+        { name: "My Applications (Jobseeker)", path: "/dashboard/my-applications", icon: <Newspaper size={16} /> },
+        { name: "Manage Jobs", path: "/dashboard/manage-jobs", icon: <Briefcase size={16} /> },
         { name: "Logout", path: "/logout" },
     ];
 

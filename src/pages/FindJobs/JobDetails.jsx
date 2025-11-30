@@ -56,7 +56,8 @@ const JobDetails = () => {
         appliedAt: new Date().toISOString(),
         jobLevel,
         deadline,
-        status: 'pending'
+        applicationStatus: 'pending',
+        jobStatus: status
     }
     const handelApplyJob = async () => {
         try {
@@ -67,7 +68,6 @@ const JobDetails = () => {
         }
         catch (error) {
             const status = error.response?.status;
-            console.log(status)
 
             if (status === 400) {
                 toast.error("Please create your profile first!");
